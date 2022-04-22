@@ -1,12 +1,15 @@
 package hellojpa;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
 public class Member {
 
     @Id

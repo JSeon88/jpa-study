@@ -1,9 +1,6 @@
 package hellojpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 public class JpaMain {
@@ -41,16 +38,43 @@ public class JpaMain {
 //            transaction.commit();
 
 
-            Member member1 = Member.builder().id(4L).name("test4").build();
-            Member member2 = Member.builder().id(5L).name("test5").build();
+//            Member member1 = Member.builder().id(4L).name("test4").build();
+//            Member member2 = Member.builder().id(5L).name("test5").build();
+//
+//            entityManager.persist(member1);
+//            entityManager.persist(member2);
+//
+//            System.out.println("==========================");
+//            // 여기까지 insert 쿼리를 보내지 않음
+//
+//            // 커밋하는 순간 데이터 베이스에 insert 쿼리를 보냄.
+//            transaction.commit();
 
-            entityManager.persist(member1);
-            entityManager.persist(member2);
 
-            System.out.println("==========================");
-            // 여기까지 insert 쿼리를 보내지 않음
 
-            // 커밋하는 순간 데이터 베이스에 insert 쿼리를 보냄.
+            /*
+                플러시 : 영속성 컨텍스트의 변경내용을 데이터베이스에 반영
+                em.flush -> 직접 호출
+                트랜잭션 커밋, JPAL 쿼리 실행 -> 자동 호출
+                영속성 컨텍스트를 비우지 않음
+
+                플러시 모드 옵션
+                 - FlushModeType.AUTO (기본값)
+                 - FlushModeType.COMMIT
+            */
+
+
+            Member member = Member.builder().id(6L).name("test6").build();
+
+            entityManager.persist(member);
+
+            System.out.println("=======================");
+
+            // 데이터베이스에 바로 반영
+            entityManager.flush();
+
+            System.out.println("=======================");
+
             transaction.commit();
 
         } catch (Exception e) {

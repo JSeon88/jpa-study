@@ -62,19 +62,36 @@ public class JpaMain {
                  - FlushModeType.AUTO (기본값)
                  - FlushModeType.COMMIT
             */
+//            Member member = Member.builder().id(6L).name("test6").build();
+//
+//            entityManager.persist(member);
+//
+//            System.out.println("=======================");
+//
+//            // 데이터베이스에 바로 반영
+//            entityManager.flush();
+//
+//            System.out.println("=======================");
+//
+//            transaction.commit();
 
 
-            Member member = Member.builder().id(6L).name("test6").build();
 
-            entityManager.persist(member);
 
-            System.out.println("=======================");
+            /*
+                준영속 : 영속 -> 준영속
+                영속 상태의 엔티티가 영속 컨텍스트에서 분리(detached)
 
-            // 데이터베이스에 바로 반영
-            entityManager.flush();
+                entityManager.detach(entity) : 특정 엔티티만 준영속 상태로 변경
+                entityManager.clear() : 영속성 컨텍스트를 완전 초기화
+                entityManager.close() : 영속성 컨텍스트를 종료
+             */
+            Member findMember = entityManager.find(Member.class, 6L);
+            findMember.setName("test66666");
 
-            System.out.println("=======================");
+            entityManager.detach(findMember);
 
+            // 업데이트 쿼리 날라가지 않음
             transaction.commit();
 
         } catch (Exception e) {

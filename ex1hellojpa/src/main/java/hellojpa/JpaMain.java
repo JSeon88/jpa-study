@@ -18,17 +18,27 @@ public class JpaMain {
 
         try {
 
-            /* 등록
-            Member member = new Member();
-            member.setId(1L);
-            member.setName("test");
+//            등록
+//            Member member = new Member();
+//            member.setId(1L);
+//            member.setName("test");
+//
+//            entityManager.persist(member);
 
-            entityManager.persist(member);
-            */
 
+//            검색
+//            Member findMember = entityManager.find(Member.class, 1L);
+//            System.out.println("id : "+findMember.getId());
+//            System.out.println("name : "+findMember.getName());
+
+//            수정
+//            persist를 안해줘도 객체가 변경되면 수정 쿼리가 나감. 트랜잭션 커밋 단계에서 변경점을 파악 후 수정 쿼리를 날리는 듯
+//            Member findMember = entityManager.find(Member.class, 1L);
+//            findMember.setName("test2");
+
+            // 삭제
             Member findMember = entityManager.find(Member.class, 1L);
-            System.out.println("id : "+findMember.getId());
-            System.out.println("name : "+findMember.getName());
+            entityManager.remove(findMember);
 
             transaction.commit();
         } catch (Exception e) {

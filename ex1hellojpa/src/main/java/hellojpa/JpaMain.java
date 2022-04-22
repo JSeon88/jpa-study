@@ -18,11 +18,17 @@ public class JpaMain {
 
         try {
 
+            /* 등록
             Member member = new Member();
             member.setId(1L);
             member.setName("test");
 
             entityManager.persist(member);
+            */
+
+            Member findMember = entityManager.find(Member.class, 1L);
+            System.out.println("id : "+findMember.getId());
+            System.out.println("name : "+findMember.getName());
 
             transaction.commit();
         } catch (Exception e) {

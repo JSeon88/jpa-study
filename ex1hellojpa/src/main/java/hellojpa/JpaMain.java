@@ -18,40 +18,25 @@ public class JpaMain {
         transaction.begin();
 
         try {
+            // 비영속
+            Member member = new Member();
+            member.setId(3L);
+            member.setName("test3");
 
-//            등록
-//            Member member = new Member();
-//            member.setId(2L);
-//            member.setName("test2");
-//
-//            entityManager.persist(member);
+            // 영속
+            System.out.println("==============BEFORE=================");
+            entityManager.persist(member);
+            System.out.println("==============AFTER=================");
 
+            // find를 하면 제일 먼저 1차 캐시에서 찾음
+            // 3L는 아직 디비에 저장되어있지는 않지만 1차 캐시에 있기 때문에 1차 캐시에서 가져옴.
+            Member findMember = entityManager.find(Member.class, 3L);
 
-//            검색
-//            Member findMember = entityManager.find(Member.class, 1L);
-//            System.out.println("id : "+findMember.getId());
-//            System.out.println("name : "+findMember.getName());
+            System.out.println("id : "+findMember.getId());
+            System.out.println("name : "+findMember.getName());
 
-            // 검색2
-            List<Member> members = entityManager
-                    .createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(1)
-                    .getResultList();
-            for (Member member : members) {
-                System.out.println(member.getId());
-                System.out.println(member.getName());
-            }
-
-//            수정
-//            persist를 안해줘도 객체가 변경되면 수정 쿼리가 나감. 트랜잭션 커밋 단계에서 변경점을 파악 후 수정 쿼리를 날리는 듯
-//            Member findMember = entityManager.find(Member.class, 1L);
-//            findMember.setName("test2");
-
-            // 삭제
-//            Member findMember = entityManager.find(Member.class, 1L);
-//            entityManager.remove(findMember);
-
+            // 커밋할 때 쓰기 지연 SQL 저장소에 있는 걸 디비에 날림
+            // 그래서 이때 insert 쿼리가 출력
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
